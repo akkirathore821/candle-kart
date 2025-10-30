@@ -1,0 +1,42 @@
+server:
+  port: 8080   # Gateway will run on port 8080
+
+spring:
+  application:
+    name: api_gateway
+
+  main:
+    web-application-type: reactive   # Force reactive mode
+
+  cloud:
+    gateway:
+#      routes:
+#        - id: account-service
+#          uri: lb://account-service
+#          predicates:
+#            - Path=/api/accounts/**
+#
+#        - id: transaction-service
+#          uri: lb://transaction-service
+#          predicates:
+#            - Path=/api/transactions/**
+#
+#        - id: authentication-service
+#          uri: lb://authentication-service
+#          predicates:
+#            - Path=/api/auth/**
+
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
