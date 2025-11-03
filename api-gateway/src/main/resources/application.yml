@@ -3,23 +3,23 @@ server:
 
 spring:
   application:
-    name: api_gateway
+    name: api-gateway
 
   main:
     web-application-type: reactive   # Force reactive mode
 
   cloud:
     gateway:
-#      routes:
-#        - id: account-service
-#          uri: lb://account-service
-#          predicates:
-#            - Path=/api/accounts/**
-#
-#        - id: transaction-service
-#          uri: lb://transaction-service
-#          predicates:
-#            - Path=/api/transactions/**
+      routes:
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user/**
+
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
 #
 #        - id: authentication-service
 #          uri: lb://authentication-service

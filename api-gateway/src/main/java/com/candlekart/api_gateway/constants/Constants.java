@@ -1,0 +1,5 @@
+package com.candlekart.api_gateway.constants;
+
+public class Constants {
+    public static final String PUBLIC_SECRET = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsztLNBmdA4vz38+IQfTonQnDhWVo5vlaZ4NFYHuZCvUE9Od4dnyc7JwTJf9swWJkTAYkgwkRD5q9J5fBvEfqdeX1ZzSIBYG9oVhTaoFdourz1v+BDqsfbpoGNPlHrpweiIZ1d1kqwFY7nsuYJPs8EYgIDE+e5bB+qMxt5JqPKxeaIXX4m7K4blWQVE/oX8LEtoju6EhV3VEwy1IwyoUA9H/TithoWNKTGMTS83OalNs8jRlS1wGy7BP+ki+dxF5jWcoftM/EkB4Kbd/vk0T+jEmgKsSUNWDUtfve/WfPjt6mwuvVXCeb7cxWCUOoKgFxa7uMmTjxD7hSUZCoGkKmpwIDAQAB";
+}

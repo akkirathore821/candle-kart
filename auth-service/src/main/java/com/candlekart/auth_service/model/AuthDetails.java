@@ -21,7 +21,7 @@ public class AuthDetails {
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "user_id", unique = true, nullable = false)
-    private String userId;
+    private Long userId;
     @Column(name = "role", nullable = false)
     private Role role;
 
@@ -49,14 +49,9 @@ public class AuthDetails {
         this.password = password;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
-
     public Role getRole() {
         return role;
     }

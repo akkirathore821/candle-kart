@@ -34,19 +34,6 @@ public class AuthConfig {
                 .userDetailsService(userDetailsService)
 
                 .build();
-
-//                // ✅ Enable Basic Auth
-//                .httpBasic(httpBasic -> {})
-//
-                // ✅ Set your UserDetailsService
-//                .userDetailsService(userDetailsService)
-//
-//                // ✅ Disable sessions for JWT-based APIs
-//                .sessionManagement(session ->
-//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                )
-//
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
     }
 
     @Bean
