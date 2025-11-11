@@ -15,6 +15,7 @@ import java.util.List;
 @Builder
 @Table(name = "users")
 public class User {
+//    Todo Use UUID for ID
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", updatable = false, nullable = false)

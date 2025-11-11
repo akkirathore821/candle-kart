@@ -1,4 +1,4 @@
-package com.candlekart.product_service.exc;
+package com.candlekart.inventory_service.exc;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

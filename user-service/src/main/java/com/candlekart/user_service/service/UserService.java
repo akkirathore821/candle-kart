@@ -160,10 +160,10 @@ public class UserService {
         }
 
         // 4️⃣ Save updated entity
-        User updatedUser = userRepository.save(existingUser);
+//        User updatedUser = userRepository.save(existingUser);
 
         // 5️⃣ Convert to response DTO
-        return toDto(updatedUser);
+        return toDto(existingUser);
     }
 
     public String deleteUser(String userId) {

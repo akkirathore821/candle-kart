@@ -36,4 +36,14 @@ public class UserController {
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest request){
         return ResponseEntity.ok(userService.updateUser(request));
     }
+
+//  Todo
+//            | Method | Endpoint                | Description                          |
+//            | ------ | ----------------------- | ------------------------------------ |
+//            | POST   | `/users`                | Create user (called by Auth Service) |
+//            | GET    | `/users/{id}`           | Fetch user profile                   |
+//            | PUT    | `/users/{id}`           | Update profile                       |
+//            | POST   | `/users/{id}/addresses` | Add address                          |
+//            | GET    | `/users/{id}/addresses` | Get addresses                        |
+
 }

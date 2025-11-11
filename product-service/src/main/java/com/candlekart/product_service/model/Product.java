@@ -19,7 +19,6 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-//    Todo define the unique sku for each product
     @Column(name = "product_id")
     private Long productId;
     @Column(unique = true, nullable = false)
@@ -122,3 +121,19 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 }
+
+//Todo Edit the Product Entity according to below sample
+//{
+//        "productId": "uuid",
+//        "sku": "SKU12345",
+//        "name": "Wireless Headphones",
+//        "description": "...",
+//        "category": "Audio",
+//        "price": 2499.00,
+//        "currency": "INR",
+//        "attributes": {"color": "black", "battery": "24h"},
+//        "images": ["url1","url2"],
+//        "createdAt": "2025-10-29T..."
+//        "updatedAt": "2025-10-29T..."
+//}
+
