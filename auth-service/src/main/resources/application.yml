@@ -7,7 +7,7 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/candle_kart
-    username: postgres
+    username: akshayrathore
     password: root
     driver-class-name: org.postgresql.Driver
 

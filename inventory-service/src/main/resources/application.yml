@@ -26,3 +26,7 @@ spring:
 eureka:
   instance:
     hostname: localhost
+
+
+
+#  CREATE DATABASE candle_kart;
