@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/elastic_product")
 public class ProductController {
@@ -17,9 +19,14 @@ public class ProductController {
     @Autowired
     private SearchService searchService;
 
-    @GetMapping("/products")
-    public ResponseEntity<ProductDocument> search(@RequestBody ProductRequest request) {
+    @PostMapping("/addProducts")
+    public ResponseEntity<ProductDocument> addProducts(@RequestBody ProductRequest request) {
         return ResponseEntity.ok(searchService.addProduct(request));
+    }
+
+    @PostMapping("/addAllProducts")
+    public ResponseEntity<List<ProductDocument>> addAllProducts(@RequestBody List<ProductRequest> requests) {
+        return ResponseEntity.ok(searchService.addAllProducts(requests));
     }
 
 //    @GetMapping("/suggest")

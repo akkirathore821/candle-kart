@@ -26,7 +26,7 @@ public class SearchService {
     private ElasticsearchClient elasticsearchClient;
 
     @Autowired
-    ProductSearchRepository repository;
+    private ProductSearchRepository repository;
 
     public Page<ProductDocument> search(
             String q,
@@ -109,7 +109,13 @@ public class SearchService {
     public ProductDocument addProduct(ProductRequest request) {
         ProductDocument doc = toDoc(request);
         return repository.save(doc);
+    }
 
+    public @Nullable List<ProductDocument> addAllProducts(List<ProductRequest> requests) {
+        List<ProductDocument> docs = requests.stream()
+                .map(this::toDoc)
+                .toList();
+        return (List<ProductDocument>) repository.saveAll(docs);
     }
 
     private ProductDocument toDoc (ProductRequest request){

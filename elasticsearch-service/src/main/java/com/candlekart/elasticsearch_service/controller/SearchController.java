@@ -28,7 +28,7 @@ public class SearchController {
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String sort
+            @RequestParam(required = false,defaultValue = "price_asc") String sort
     ) {
         return ResponseEntity.ok(searchService.search(q, category, minPrice, maxPrice, null, page, size, sort));
     }
