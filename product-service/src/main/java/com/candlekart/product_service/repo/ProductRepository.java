@@ -9,5 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, UUID> {
-    Optional<Product> findBySku(String sku);
+    Optional<Product> findBySkuIgnoreCase(String sku);
+    boolean existsBySku(String sku);
 }

@@ -18,19 +18,14 @@ public class AdminProductController {
     @Autowired
     private ProductService productService;
 
-    //Todo only by ADMIN
     @PostMapping("create")
-    public ResponseEntity<ProductResponse> createProduct(@RequestBody ProductRequest request) {
+    public ResponseEntity<List<ProductResponse>> createProduct(@RequestBody List<ProductRequest> request) throws Exception {
         return ResponseEntity.ok(productService.createProduct(request));
     }
-
-    //Todo only by ADMIN
     @PutMapping("/update")
     public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(request));
     }
-
-    //Todo only by ADMIN
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
         productService.deleteProduct(id);

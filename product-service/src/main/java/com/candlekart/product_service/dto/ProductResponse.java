@@ -8,8 +8,7 @@ import java.util.UUID;
 @Data
 @Builder
 public class ProductResponse {
-    private UUID id;
-    private Long productId;
+    private UUID productId;
     private String sku;
     private String name;
     private String description;
@@ -18,24 +17,16 @@ public class ProductResponse {
     private String currency;
     private String imageUrl;
 
-    public UUID getId() {
-        return id;
+    public UUID getProductId() {
+        return productId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setProductId(UUID productId) {
+        this.productId = productId;
     }
 
     public String getSku() {
         return sku;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public void setSku(String sku) {

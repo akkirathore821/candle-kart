@@ -19,10 +19,19 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping
+    @GetMapping("/getAllProducts")
     public ResponseEntity<List<ProductResponse>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
+    @GetMapping("/id/{productId}")
+    public ResponseEntity<ProductResponse> getProductById(@PathVariable String productId) {
+        return ResponseEntity.ok(productService.getProductById(productId));
+    }
+    @GetMapping("/sku/{sku}")
+    public ResponseEntity<ProductResponse> getProductBySKU(@PathVariable String sku) {
+        return ResponseEntity.ok(productService.getProductBySKU(sku));
+    }
+
 }
 
 

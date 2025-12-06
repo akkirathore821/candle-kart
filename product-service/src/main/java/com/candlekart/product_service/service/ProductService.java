@@ -1,27 +1,171 @@
 package com.candlekart.product_service.service;
 
-import com.candlekart.product_service.dto.ProductRequest;
-import com.candlekart.product_service.dto.ProductResponse;
+import com.candlekart.product_service.dto.*;
+import com.candlekart.product_service.exc.BadRequestException;
 import com.candlekart.product_service.exc.NotFoundException;
+import com.candlekart.product_service.exc.ValidationException;
+import com.candlekart.product_service.kafka.KafkaProducer;
 import com.candlekart.product_service.model.Product;
 import com.candlekart.product_service.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.candlekart.product_service.constants.Constants.Create_Product_In_ElasticSearch_Topic_Name;
+import static com.candlekart.product_service.constants.Constants.Create_Product_In_Inventory_Topic_Name;
 
 @Service
 public class ProductService {
 
     @Autowired
-    ProductRepository productRepository;
+    private ProductRepository productRepository;
+    @Autowired
+    private KafkaProducer kafkaProducer;
 
+    @Transactional
+    public List<ProductResponse> createProduct(List<ProductRequest> request) throws Exception {
+
+//        todo
+//        Transactional + Kafka publish = Problem
+//        You are in a single @Transactional method.
+//        Meaning:
+//            DB save is done inside the transaction
+//            Kafka publish is done inside the same transaction
+//        ⚠️ If Kafka publish fails → DB insert is already committed
+//        ⚠️ If DB insert fails (constraint), Kafka may already have published message
+//        👉 This is a classic "dual-write" consistency problem".
+//        Correct solution:
+//            Use Transactional Outbox Pattern or Spring @TransactionalEventListener.
+
+        List<Product> products = new ArrayList<>();
+
+        try{
+            for (ProductRequest pr : request)
+                if (!productRepository.existsBySku(pr.getSku()))
+                    products.add(toEntity(pr));
+
+            products = productRepository.saveAll(products);
+
+            List<ProductResponse> responses = products.stream().map(this::toDto).toList();
+
+            ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("products", LocalDateTime.now(), products.size(), responses);
+            InventoryMessageDTO inventoryMessageDTO = new InventoryMessageDTO("inventories", LocalDateTime.now(), products.size(),
+                    products.stream()
+                            .map(product -> new InventoryDTO(product.getSku(), 0))
+                            .toList());
+
+            //Publishing the message to the Inventory and Elasticsearch
+            publish(Create_Product_In_Inventory_Topic_Name, inventoryMessageDTO);
+            publish(Create_Product_In_ElasticSearch_Topic_Name, elasticSearchMessageDTO);
+
+            return responses;
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+
+
+
+
+//        ToDo
+//        If SKU exists → it skips silently
+//        The client won’t know which ones were skipped
+//        Can cause unexpected partial imports
+//        Better to return a report of skipped SKUs.
+    }
+
+    public ProductResponse getProductById(String productId) {
+        Product product = productRepository.findById(UUID.fromString(productId))
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+        return  toDto(product);
+    }
+    public ProductResponse getProductBySKU(String sku) {
+        if (sku == null || sku.isBlank()) {
+            throw new ValidationException("SKU cannot be empty");
+        }
+
+        Product product = productRepository.findBySkuIgnoreCase(sku)
+                .orElseThrow(() -> new NotFoundException("Product not found with SKU: " + sku));
+
+        return toDto(product);
+    }
+    public List<ProductResponse> getAllProducts() {
+        return productRepository.findAll()
+                .stream().map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public ProductResponse updateProduct(ProductRequest request) {
+
+        //Todo Need to call Elasticsearch service to update product
+
+        Product product = productRepository.findById(request.getProductId())
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+
+        boolean updated = false;
+
+        if (request.getName() != null && !request.getName().isBlank()) {
+            product.setName(request.getName());
+            updated = true;
+        }
+        if (request.getDescription() != null && !request.getDescription().isBlank()) {
+            product.setDescription(request.getDescription());
+            updated = true;
+        }
+        if (request.getCategory() != null) {
+            product.setCategory(request.getCategory());
+            updated = true;
+        }
+        if (request.getPrice() != null && request.getPrice().doubleValue() >= 0) {
+            product.setPrice(request.getPrice());
+            updated = true;
+        }
+        if (request.getCurrency() != null && !request.getCurrency().isBlank()) {
+            product.setCurrency(request.getCurrency());
+            updated = true;
+        }
+        if (request.getImageUrl() != null && !request.getImageUrl().isBlank()) {
+            product.setImageUrl(request.getImageUrl());
+            updated = true;
+        }
+        if (!updated) {
+            throw new BadRequestException("No fields provided for update");
+        }
+        product.setUpdatedAt(LocalDateTime.now());
+
+        return toDto(product);
+    }
+
+
+    public void deleteProduct(UUID id) {
+        productRepository.deleteById(id);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void publish(String topic, Object evt) {
+        kafkaProducer.publish(topic, evt);
+    }
     private ProductResponse toDto(Product product) {
         return ProductResponse.builder()
-                .id(product.getId())
                 .productId(product.getProductId())
                 .sku(product.getSku())
                 .name(product.getName())
@@ -45,43 +189,5 @@ public class ProductService {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
-    }
-
-    public ProductResponse createProduct(ProductRequest request) {
-        return toDto(productRepository.save(toEntity(request)));
-    }
-
-    public List<ProductResponse> getAllProducts() {
-        return productRepository.findAll()
-                .stream().map(this::toDto)
-                .collect(Collectors.toList());
-    }
-
-    public ProductResponse updateProduct(ProductRequest request) {
-        Product product = productRepository.findById(request.getId())
-                .orElseThrow(() -> new NotFoundException("Product not found"));
-
-        if (request.getName() != null)
-            product.setName(request.getName());
-        if (request.getDescription() != null)
-            product.setDescription(request.getDescription());
-        if (request.getCategory() != null)
-            product.setCategory(request.getCategory());
-        if (request.getPrice() != null)
-            product.setPrice(request.getPrice());
-        if (request.getCurrency() != null)
-            product.setCurrency(request.getCurrency());
-        if (request.getStock() != null)
-            product.setStock(request.getStock());
-        if (request.getImageUrl() != null)
-            product.setImageUrl(request.getImageUrl());
-
-        product.setUpdatedAt(LocalDateTime.now());
-
-        return toDto(productRepository.save(product));
-    }
-
-    public void deleteProduct(UUID id) {
-        productRepository.deleteById(id);
     }
 }

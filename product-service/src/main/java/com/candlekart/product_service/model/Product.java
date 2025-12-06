@@ -17,10 +17,8 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
     @Column(name = "product_id")
-    private Long productId;
+    private UUID productId;
     @Column(unique = true, nullable = false)
     private String sku;
     private String name;
@@ -28,24 +26,18 @@ public class Product {
     private String category;
     private Double price;
     private String currency;
+
+    //Todo implement the List of images
     private String imageUrl;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Long getProductId() {
+    public UUID getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(UUID productId) {
         this.productId = productId;
     }
 
