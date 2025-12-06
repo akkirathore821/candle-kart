@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "auth_details")
 @Data
@@ -14,23 +16,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthDetails {
     @Id()
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     @Column(name = "username", unique = true, nullable = false)
     private String username;
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "user_id", unique = true, nullable = false)
-    private Long userId;
+    private UUID userId;
     @Column(name = "role", nullable = false)
     private Role role;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -49,9 +59,6 @@ public class AuthDetails {
         this.password = password;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
     public Role getRole() {
         return role;
     }

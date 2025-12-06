@@ -12,10 +12,7 @@ import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.candlekart.auth_service.constants.Constants.PRIVATE_SECRET;
 import static com.candlekart.auth_service.constants.Constants.PUBLIC_SECRET;
@@ -29,7 +26,7 @@ public class JwtService {
         this.userDetailsService = userDetailsService;
     }
 
-    public String generateToken(String username, Long userId, Role role) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String generateToken(String username, UUID userId, Role role) throws NoSuchAlgorithmException, InvalidKeySpecException {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId",userId);
@@ -79,11 +76,7 @@ public class JwtService {
     }
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder()
-                    .setSigningKey(getPublicSignKey())
-                    .build()
-                    .parseClaimsJws(token.replace("Bearer ", ""));
-            return true;
+            return extractAllClaims(token).getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {

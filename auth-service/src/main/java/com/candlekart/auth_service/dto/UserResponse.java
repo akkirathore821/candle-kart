@@ -7,13 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
-    private Long user_id;
+    private UUID user_id;
     private String username;
     private String email;
     private String firstName;
@@ -22,11 +23,11 @@ public class UserResponse {
     private Role role;
     private List<AddressResponse> addresses;
 
-    public Long getUser_id() {
+    public UUID getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(Long user_id) {
+    public void setUser_id(UUID user_id) {
         this.user_id = user_id;
     }
 

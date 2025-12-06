@@ -1,10 +1,12 @@
 package com.candlekart.user_service.dto;
 
 import com.candlekart.user_service.model.Role;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +14,7 @@ import java.util.List;
 @Builder
 public class UserRequest {
 
-    private Long userId;
+    private UUID userId;
 
     @NotBlank(message = "Username is required")
     private String username;
@@ -34,13 +36,14 @@ public class UserRequest {
     private Role role;
 
     @Size(min = 1, message = "At least one address is required")
+    @Valid
     private List<AddressRequest> addresses;
 
-    public Long getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

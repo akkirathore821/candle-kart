@@ -29,12 +29,10 @@ public class AuthController {
     public ResponseEntity<Token> register(@Valid @RequestBody UserRequest request) throws Exception {
         return ResponseEntity.ok(authService.register(request));
     }
-//    @PostMapping("/register")
-//    public ResponseEntity<Token> register(@Valid @RequestBody RegisterRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException {
-//        return ResponseEntity.ok(authService.register(request));
-//    }
     @GetMapping("/validate")
-    public ResponseEntity<Map<String, Object>> validate(@RequestHeader("Authorization") String authHeader) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public ResponseEntity<Map<String, Object>> validate(@RequestHeader("Authorization") String authHeader) throws Exception {
         return authService.validate(authHeader);
     }
 }
+
+// Check Points

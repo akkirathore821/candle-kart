@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -14,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "addresses")
 public class Address {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     @Column(name = "street")
     private String street;
     @Column(name = "city")
@@ -31,11 +33,11 @@ public class Address {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

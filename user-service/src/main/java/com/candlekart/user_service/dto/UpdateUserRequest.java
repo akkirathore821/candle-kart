@@ -1,6 +1,8 @@
-package com.candlekart.user_service.model;
+package com.candlekart.user_service.dto;
 
-import jakarta.persistence.*;
+import com.candlekart.user_service.model.Role;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,45 +11,32 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", updatable = false, nullable = false)
-    private UUID id;
+public class UpdateUserRequest {
 
-    @Column(name = "username",unique = true)
+    //Todo Add the Validations
+
+    private UUID userId;
+
     private String username;
-    @Column(name = "email",unique = true)
     private String email;
-    @Column(name = "firstName")
     private String firstName;
-    @Column(name = "lastName")
     private String lastName;
-    @Column(name = "phone_number",unique = true)
     private String phoneNumber;
-    @Column(name = "role")
-    private Role role; // ROLE_USER or ROLE_ADMIN
 
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private List<Address> addresses;
+    private Role role;
 
-    public UUID getId() {
-        return id;
+    private List<AddressRequest> addresses;
+
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -98,11 +87,11 @@ public class User {
         this.role = role;
     }
 
-    public List<Address> getAddresses() {
+    public List<AddressRequest> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(List<AddressRequest> addresses) {
         this.addresses = addresses;
     }
 }

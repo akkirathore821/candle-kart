@@ -1,5 +1,6 @@
 package com.candlekart.user_service.controller;
 
+import com.candlekart.user_service.dto.UpdateUserRequest;
 import com.candlekart.user_service.dto.UserRequest;
 import com.candlekart.user_service.dto.UserResponse;
 import com.candlekart.user_service.service.UserService;
@@ -33,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserByPhoneNumber(phoneNumber));
     }
     @PutMapping("/update")
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest request){
+    public ResponseEntity<UserResponse> updateUser(@Valid @RequestBody UpdateUserRequest request){
         return ResponseEntity.ok(userService.updateUser(request));
     }
 
