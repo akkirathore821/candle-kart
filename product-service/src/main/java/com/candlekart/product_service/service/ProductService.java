@@ -15,8 +15,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.candlekart.product_service.constants.Constants.Create_Product_In_ElasticSearch_Topic_Name;
-import static com.candlekart.product_service.constants.Constants.Create_Product_In_Inventory_Topic_Name;
+import static com.candlekart.product_service.constants.Constants.*;
 
 @Service
 public class ProductService {
@@ -52,8 +51,8 @@ public class ProductService {
 
             List<ProductResponse> responses = products.stream().map(this::toDto).toList();
 
-            ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("products", LocalDateTime.now(), products.size(), responses);
-            InventoryMessageDTO inventoryMessageDTO = new InventoryMessageDTO("inventories", LocalDateTime.now(), products.size(),
+            ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("create", LocalDateTime.now(), responses.size(), responses);
+            InventoryMessageDTO inventoryMessageDTO = new InventoryMessageDTO("create", LocalDateTime.now(), products.size(),
                     products.stream()
                             .map(product -> new InventoryDTO(product.getSku(), 0))
                             .toList());
@@ -94,11 +93,14 @@ public class ProductService {
         return toDto(product);
     }
     public List<ProductResponse> getAllProducts() {
-        return productRepository.findAll()
-                .stream().map(this::toDto)
-                .collect(Collectors.toList());
-    }
+        List<ProductResponse> res = productRepository.findAll().stream()
+                .map(this::toDto)
+                .toList();
 
+        if(res.isEmpty())   throw new NotFoundException("Product not found");
+        return res;
+
+    }
     @Transactional
     public ProductResponse updateProduct(ProductRequest request) {
 
@@ -121,7 +123,7 @@ public class ProductService {
             product.setCategory(request.getCategory());
             updated = true;
         }
-        if (request.getPrice() != null && request.getPrice().doubleValue() >= 0) {
+        if (request.getPrice() != null && request.getPrice() >= 0) {
             product.setPrice(request.getPrice());
             updated = true;
         }
@@ -138,12 +140,18 @@ public class ProductService {
         }
         product.setUpdatedAt(LocalDateTime.now());
 
+        List<ProductResponse> products = new ArrayList<>();
+        products.add(toDto(product));
+        ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("update", LocalDateTime.now(), products.size(), products);
+        publish(Update_Product_In_ElasticSearch_Topic_Name, elasticSearchMessageDTO);
+
+
         return toDto(product);
     }
-
-
-    public void deleteProduct(UUID id) {
-        productRepository.deleteById(id);
+    public void deleteProduct(UUID productId) {
+        productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+        productRepository.deleteById(productId);
     }
 
 

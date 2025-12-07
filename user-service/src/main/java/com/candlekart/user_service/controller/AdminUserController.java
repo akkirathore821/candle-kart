@@ -18,13 +18,10 @@ public class AdminUserController {
     @Autowired
     private UserService userService;
 
-    //Todo only by ADMIN
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable String userId){
         return ResponseEntity.ok(userService.deleteUser(userId));
     }
-
-    //Todo only by ADMIN
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());

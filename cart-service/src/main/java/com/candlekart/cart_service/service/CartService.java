@@ -3,6 +3,7 @@ package com.candlekart.cart_service.service;
 import com.candlekart.cart_service.dto.CartItemDto;
 import com.candlekart.cart_service.dto.CartItemRequest;
 import com.candlekart.cart_service.dto.CartResponse;
+import com.candlekart.cart_service.kafka.KafkaProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -20,6 +21,8 @@ public class CartService {
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private KafkaProducer kafkaProducer;
 
 //    Todo
 //    So your cart architecture will be:
@@ -64,7 +67,7 @@ public class CartService {
     }
 
     public void checkout(String userId) {
-        // TODO: Produce Kafka Event `cart.checkedout`
+        // TODO: Produce Feign Client
         // Order Service will take over
         clearCart(userId);
     }
@@ -87,6 +90,16 @@ public class CartService {
         redisTemplate.opsForValue().set(CART_PREFIX + userId, cart);
     }
 
+
+
+
+
+
+
+
+    private void publish(String topic, Object evt) {
+        kafkaProducer.publish(topic, evt);
+    }
 
 
 }
