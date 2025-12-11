@@ -8,22 +8,22 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class InventoryRequest {
-    private String skuCode;
-    private Integer quantity;
+    private String sku;
+    private Integer stock;
 
-    public String getSkuCode() {
-        return skuCode;
+    public String getSku() {
+        return sku;
     }
 
-    public void setSkuCode(String skuCode) {
-        this.skuCode = skuCode;
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStock() {
+        return stock;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

@@ -7,7 +7,7 @@ import com.candlekart.auth_service.dto.Token;
 import com.candlekart.auth_service.dto.LoginRequest;
 import com.candlekart.auth_service.exc.ValidationException;
 import com.candlekart.auth_service.exc.WrongCredentialsException;
-import com.candlekart.auth_service.feign.FeignAccountClient;
+import com.candlekart.auth_service.feign.FeignUserClient;
 import com.candlekart.auth_service.model.AuthDetails;
 import com.candlekart.auth_service.repository.AuthRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,9 +26,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
@@ -47,7 +45,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private FeignAccountClient feignAccountClient;
+    private FeignUserClient feignAccountClient;
 
     public Token login(LoginRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException {
 

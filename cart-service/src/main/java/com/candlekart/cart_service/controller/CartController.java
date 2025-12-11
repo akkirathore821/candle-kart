@@ -3,6 +3,7 @@ package com.candlekart.cart_service.controller;
 import com.candlekart.cart_service.dto.CartItemRequest;
 import com.candlekart.cart_service.dto.CartResponse;
 import com.candlekart.cart_service.service.CartService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class CartController {
     }
 
     @PostMapping("/checkout/{userId}")
-    public ResponseEntity<?> checkout(@PathVariable String userId) {
+    public ResponseEntity<?> checkout(@PathVariable String userId) throws JsonProcessingException {
         cartService.checkout(userId);
         return ResponseEntity.ok().build();
     }

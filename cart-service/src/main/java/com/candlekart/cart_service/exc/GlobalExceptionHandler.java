@@ -1,4 +1,4 @@
-package com.candlekart.inventory_service.exc;
+package com.candlekart.cart_service.exc;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,29 +20,22 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
-
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleResourceNotFound(NotFoundException ex) {
-        Map<String, String> response = new HashMap<>();
-        response.put("error", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-    }
-    @ExceptionHandler(InsufficientStockException.class)
-    public ResponseEntity<Map<String, String>> handleResourceNotFound(InsufficientStockException ex) {
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Map<String, String>> handleValidationException(ValidationException ex) {
         Map<String, String> response = new HashMap<>();
         response.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
-    @ExceptionHandler(InvalidOrderException.class)
-    public void InvalidOrderException(InvalidOrderException ex){
-        //Todo
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleWrongCredentials(NotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("error", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
         Map<String, String> response = new HashMap<>();
-        response.put("error", "Internal server error");
-        response.put("details", ex.getMessage());
+        response.put("error", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 

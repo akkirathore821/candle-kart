@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "user-service", path = "/api/user")
-public interface FeignAccountClient {
+public interface FeignUserClient {
 
     @PostMapping(value = "/create", consumes = "application/json")
     ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request);

@@ -17,6 +17,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.candlekart.order_service.constants.Constants.Create_Order_To_Inventory_Topic_Name;
+
 @Slf4j
 @Service
 public class OrderService {
@@ -29,9 +31,6 @@ public class OrderService {
         Order order = cartToOrderEntity(cart);
 
         Order saved = orderRepository.save(order);
-
-        // Todo Emit Kafka event
-//        kafkaTemplate.send("order.created", saved);
 
         return toDto(saved);
     }

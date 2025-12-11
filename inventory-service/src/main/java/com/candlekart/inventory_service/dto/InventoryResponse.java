@@ -7,16 +7,16 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class InventoryResponse {
-    private String skuCode;
+    private String sku;
     private boolean inStock;
-    private Integer quantity;
+    private Integer stock;
 
-    public String getSkuCode() {
-        return skuCode;
+    public String getSku() {
+        return sku;
     }
 
-    public void setSkuCode(String skuCode) {
-        this.skuCode = skuCode;
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public boolean isInStock() {
@@ -27,12 +27,12 @@ public class InventoryResponse {
         this.inStock = inStock;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStock() {
+        return stock;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }
 

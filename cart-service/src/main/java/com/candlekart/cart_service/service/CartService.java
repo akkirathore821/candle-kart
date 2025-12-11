@@ -3,10 +3,19 @@ package com.candlekart.cart_service.service;
 import com.candlekart.cart_service.dto.CartItemDto;
 import com.candlekart.cart_service.dto.CartItemRequest;
 import com.candlekart.cart_service.dto.CartResponse;
+import com.candlekart.cart_service.dto.OrderResponse;
+import com.candlekart.cart_service.exc.NotFoundException;
+import com.candlekart.cart_service.feign.FeignOrderClient;
 import com.candlekart.cart_service.kafka.KafkaProducer;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,6 +32,8 @@ public class CartService {
     private RedisTemplate<String, Object> redisTemplate;
     @Autowired
     private KafkaProducer kafkaProducer;
+    @Autowired
+    private FeignOrderClient feignOrderClient;
 
 //    Todo
 //    So your cart architecture will be:
@@ -66,20 +77,32 @@ public class CartService {
         redisTemplate.delete(CART_PREFIX + userId);
     }
 
-    public void checkout(String userId) {
-        // TODO: Produce Feign Client
-        // Order Service will take over
-        clearCart(userId);
+    public void checkout(String userId) throws JsonProcessingException {
+        try{
+            CartResponse cartResponse = getCart(userId);
+            if(cartResponse.getItems().isEmpty())
+                throw new NotFoundException("User not found or Cart is Empty");
+
+            //Calling order create method to create method
+            ResponseEntity<OrderResponse> orderResponse = feignOrderClient.createOrder(cartResponse);
+            if(orderResponse.getStatusCode() == HttpStatus.CREATED || orderResponse.getStatusCode() == HttpStatus.OK){
+                clearCart(userId);
+            }else{
+                throw new RuntimeException("Unable to Create Order");
+            }
+        }catch (FeignException e) {
+            throw new RuntimeException(getErrorMessage(e));
+        }catch (RuntimeException e){
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
 
     private CartResponse getCartFromRedis(String userId){
         Object obj = redisTemplate.opsForValue().get(CART_PREFIX + userId);
         if(obj != null){
-            log.info("CartService : "+ obj + " " + obj.getClass());
             return (CartResponse) obj;
         }
-
 
         return CartResponse.builder()
                 .userId(userId)
@@ -99,6 +122,11 @@ public class CartService {
 
     private void publish(String topic, Object evt) {
         kafkaProducer.publish(topic, evt);
+    }
+    private String getErrorMessage(FeignException e) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json = mapper.readTree(e.contentUTF8());
+        return json.get("error").asText();
     }
 
 

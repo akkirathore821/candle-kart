@@ -16,43 +16,43 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class InventoryController {
 
-    @Autowired
-    private InventoryService inventoryService;
-
-    @PostMapping("/add")
-    public ResponseEntity<InventoryResponse> addInventory(@RequestBody InventoryRequest request) {
-        return ResponseEntity.ok(inventoryService.addInventory(request));
-    }
-
-    @PostMapping("/addAll")
-    public ResponseEntity<List<InventoryResponse>> addAllInventory(@RequestBody List<InventoryRequest> requests) {
-        return ResponseEntity.ok(inventoryService.addAllInventory(requests));
-    }
-
-    @GetMapping("/{skuCode}")
-    public ResponseEntity<InventoryResponse> getInventoryBySku(@PathVariable String skuCode) {
-        return ResponseEntity.ok(inventoryService.getInventoryBySku(skuCode));
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<InventoryResponse>> getAllInventory() {
-        return ResponseEntity.ok(inventoryService.getAllInventory());
-    }
-
-    @PostMapping("/check")
-    public ResponseEntity<List<InventoryResponse>> checkStock(@RequestBody List<String> skuCodes) {
-        return ResponseEntity.ok(inventoryService.checkStock(skuCodes));
-    }
-
-    @PostMapping("/reduce")
-    public ResponseEntity<Void> reduceStock(@RequestBody Map<String, Integer> skuQuantityMap) {
-        inventoryService.reduceStock(skuQuantityMap);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/restore")
-    public ResponseEntity<Void> restoreStock(@RequestBody Map<String, Integer> skuQuantityMap) {
-        inventoryService.restoreStock(skuQuantityMap);
-        return ResponseEntity.ok().build();
-    }
+//    @Autowired
+//    private InventoryService inventoryService;
+//
+//    @PostMapping("/add")
+//    public ResponseEntity<InventoryResponse> addNewProduct(@RequestBody InventoryRequest request) {
+//        return ResponseEntity.ok(inventoryService.addNewProduct(request));
+//    }
+//
+//    @PostMapping("/addAll")
+//    public ResponseEntity<List<InventoryResponse>> addAllInventory(@RequestBody List<InventoryRequest> requests) {
+//        return ResponseEntity.ok(inventoryService.addAllInventory(requests));
+//    }
+//
+//    @GetMapping("/{skuCode}")
+//    public ResponseEntity<InventoryResponse> getInventoryBySku(@PathVariable String skuCode) {
+//        return ResponseEntity.ok(inventoryService.getInventoryBySku(skuCode));
+//    }
+//
+//    @GetMapping("/all")
+//    public ResponseEntity<List<InventoryResponse>> getAllInventory() {
+//        return ResponseEntity.ok(inventoryService.getAllInventory());
+//    }
+//
+//    @PostMapping("/check")
+//    public ResponseEntity<List<InventoryResponse>> checkStock(@RequestBody List<String> skuCodes) {
+//        return ResponseEntity.ok(inventoryService.checkStock(skuCodes));
+//    }
+//
+//    @PostMapping("/reduce")
+//    public ResponseEntity<Void> reduceStock(@RequestBody List<InventoryRequest> requests) {
+//        inventoryService.reduceStock(requests);
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @PostMapping("/restore")
+//    public ResponseEntity<Void> restoreStock(@RequestBody List<InventoryRequest> requests) {
+//        inventoryService.restoreStock(requests);
+//        return ResponseEntity.ok().build();
+//    }
 }
