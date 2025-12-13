@@ -17,7 +17,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -58,6 +57,7 @@ public class CartService {
             cart.getItems().add(CartItemDto.builder()
                     .sku(request.getSku())
                     .quantity(request.getQty())
+                    .price(request.getPrice())
                     .build());
         }
 
@@ -77,7 +77,7 @@ public class CartService {
         redisTemplate.delete(CART_PREFIX + userId);
     }
 
-    public void checkout(String userId) throws JsonProcessingException {
+    public OrderResponse checkout(String userId) throws JsonProcessingException {
         try{
             CartResponse cartResponse = getCart(userId);
             if(cartResponse.getItems().isEmpty())
@@ -86,7 +86,8 @@ public class CartService {
             //Calling order create method to create method
             ResponseEntity<OrderResponse> orderResponse = feignOrderClient.createOrder(cartResponse);
             if(orderResponse.getStatusCode() == HttpStatus.CREATED || orderResponse.getStatusCode() == HttpStatus.OK){
-                clearCart(userId);
+//          todo commented just for testing      clearCart(userId);
+                return orderResponse.getBody();
             }else{
                 throw new RuntimeException("Unable to Create Order");
             }

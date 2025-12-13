@@ -14,7 +14,15 @@ import java.math.BigDecimal;
 public class CartItemDto {
     private String sku;
     private Integer quantity;
-    private BigDecimal price;
+    private Double price;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
     public String getSku() {
         return sku;

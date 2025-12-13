@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class OrderItemResponse {
     private String sku;
     private Integer quantity;
-    private BigDecimal price;
+    private Double price;
 
     public String getSku() {
         return sku;
@@ -22,6 +22,14 @@ public class OrderItemResponse {
 
     public Integer getQuantity() {
         return quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public void setQuantity(Integer quantity) {

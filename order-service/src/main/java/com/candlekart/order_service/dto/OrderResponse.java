@@ -2,6 +2,7 @@ package com.candlekart.order_service.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,12 +10,24 @@ import java.util.UUID;
 
 @Data
 @Builder
+
 public class OrderResponse {
 
     private UUID userId;
-    private BigDecimal totalAmount;
+
+    private UUID orderId;
+    private Double totalAmount;
     private String status;
     private List<OrderItemResponse> items;
+
+    public UUID getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(UUID orderId) {
+        this.orderId = orderId;
+    }
+
 
     public UUID getUserId() {
         return userId;
@@ -24,11 +37,11 @@ public class OrderResponse {
         this.userId = userId;
     }
 
-    public BigDecimal getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class CartItemDto {
     private String sku;
     private Integer quantity;
-//    private Double price;
+    private Double price;
 
     public String getSku() {
         return sku;

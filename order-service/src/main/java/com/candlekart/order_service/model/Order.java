@@ -10,10 +10,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Order {
 
     @Id
@@ -21,10 +22,22 @@ public class Order {
     private UUID id;
 
     private UUID userId;
-    private BigDecimal totalAmount;
+    private Double totalAmount;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", totalAmount=" + totalAmount +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", items=" + items +
+                '}';
+    }
 
     private Instant createdAt;
 
@@ -47,11 +60,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public BigDecimal getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 

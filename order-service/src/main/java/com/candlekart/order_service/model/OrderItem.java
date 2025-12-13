@@ -8,10 +8,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "order_items")
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class OrderItem {
 
     @Id
@@ -20,7 +21,7 @@ public class OrderItem {
 
     private String sku;
     private Integer quantity;
-    private BigDecimal price;
+    private Double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -50,11 +51,21 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getPrice() {
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", sku='" + sku + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
+
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

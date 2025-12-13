@@ -12,7 +12,7 @@
 	<artifactId>eureka-server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>eureka-server</name>
-	<description>Candle Kart - User Service</description>
+	<description>Candle Kart - Eureka Server</description>
 	<url/>
 	<licenses>
 		<license/>
