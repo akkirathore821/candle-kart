@@ -109,12 +109,16 @@ All protected APIs require a valid JWT token in the Authorization header:
 | GET    | `/api/orders/user/{userId}` | Get user orders   | Authenticated |
 | POST   | `/api/orders/{id}/cancel`   | Cancel order      | Authenticated |
 
-### 💳 Payment Service
+[//]: # (### 💳 Payment Service)
 
-| Method | Endpoint                 | Description             | Access           |
-| ------ | ------------------------ | ----------------------- | ---------------- |
-| POST   | `/api/payments/initiate` | Initiate payment        | Internal         |
-| POST   | `/api/payments/webhook`  | Payment gateway webhook | Public (secured) |
+[//]: # ()
+[//]: # (| Method | Endpoint                 | Description             | Access           |)
+
+[//]: # (| ------ | ------------------------ | ----------------------- | ---------------- |)
+
+[//]: # (| POST   | `/api/payments/initiate` | Initiate payment        | Internal         |)
+
+[//]: # (| POST   | `/api/payments/webhook`  | Payment gateway webhook | Public &#40;secured&#41; |)
 
 ### 🔍 Search Service (Elasticsearch)
 
@@ -123,10 +127,14 @@ All protected APIs require a valid JWT token in the Authorization header:
 | GET    | `/api/search/products` | Search products by keyword              |
 | GET    | `/api/search/filter`   | Filter products (category, price, etc.) |
 
-### 📣 Notification Service
+[//]: # (### 📣 Notification Service)
 
-| Method | Endpoint                  | Description                   |
-| ------ | ------------------------- | ----------------------------- |
-| POST   | `/api/notifications/send` | Send email/SMS (event-driven) |
+[//]: # ()
+[//]: # (| Method | Endpoint                  | Description                   |)
+
+[//]: # (| ------ | ------------------------- | ----------------------------- |)
+
+[//]: # (| POST   | `/api/notifications/send` | Send email/SMS &#40;event-driven&#41; |)
+
 
 
