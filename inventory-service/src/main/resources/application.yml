@@ -6,7 +6,7 @@ spring:
     name: inventory-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/candle_kart
+    url: jdbc:postgresql://localhost:5432/candlekart
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
