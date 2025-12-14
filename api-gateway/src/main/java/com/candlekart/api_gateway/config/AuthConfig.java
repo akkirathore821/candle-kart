@@ -27,8 +27,8 @@ public class AuthConfig {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/auth/**").permitAll()
-                        .pathMatchers("/api/connection/**").permitAll()
+                        .pathMatchers("/api/auth/**","/api/connection/**").permitAll()
+//                        .pathMatchers("/api/connection/**").permitAll()
                         .pathMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyExchange().authenticated()
                 )
