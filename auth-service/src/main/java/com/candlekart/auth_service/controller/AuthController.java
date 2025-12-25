@@ -33,10 +33,6 @@ public class AuthController {
     public ResponseEntity<Map<String, Object>> validate(@RequestHeader("Authorization") String authHeader) throws Exception {
         return authService.validate(authHeader);
     }
-    @GetMapping("/connection")
-    public ResponseEntity<String> check() {
-        return ResponseEntity.ok("Auth Service");
-    }
 }
 
 // Check Points

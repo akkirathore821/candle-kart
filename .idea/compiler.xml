@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-server" />
+        <module name="connection" />
         <module name="order-service" />
       </profile>
       <profile name="Annotation profile for payment_service" enabled="true">
@@ -32,6 +33,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="cart-service" options="-parameters" />
+      <module name="connection" options="-parameters" />
       <module name="elasticsearch-service" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
       <module name="inventory-service" options="-parameters" />
