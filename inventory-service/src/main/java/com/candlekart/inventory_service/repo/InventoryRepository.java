@@ -6,9 +6,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public interface InventoryRepository extends JpaRepository<InventoryProduct, Long> {
+public interface InventoryRepository extends JpaRepository<InventoryProduct, UUID> {
     Optional<InventoryProduct> findBySkuCode(String skuCode);
     List<InventoryProduct> findBySkuCodeIn(List<String> skuCodes);
 }
