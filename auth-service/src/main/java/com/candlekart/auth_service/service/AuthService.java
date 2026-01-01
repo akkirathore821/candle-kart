@@ -115,11 +115,11 @@ public class AuthService {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
 
-            if (!jwtService.validateToken(authHeader)) {
-                response.put("valid", false);
-                response.put("message", "Invalid or expired token");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            }
+//            if (!jwtService.validateToken(authHeader)) {
+//                response.put("valid", false);
+//                response.put("message", "Invalid or expired token");
+//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+//            }
 
             Claims claims = jwtService.extractAllClaims(authHeader);
 
@@ -127,6 +127,7 @@ public class AuthService {
             response.put("userId", claims.get("userId"));
             response.put("username", claims.getSubject());
             response.put("role", claims.get("role"));
+            response.put("expiration", claims.getExpiration());
 
             return ResponseEntity.ok(response);
         }catch (Exception e){
