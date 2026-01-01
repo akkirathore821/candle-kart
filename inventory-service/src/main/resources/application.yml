@@ -5,6 +5,13 @@ spring:
   application:
     name: inventory-service
 
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: inventory-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
   datasource:
     url: jdbc:postgresql://localhost:5432/candlekart
     username: akshayrathore
