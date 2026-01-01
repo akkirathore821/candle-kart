@@ -53,7 +53,7 @@ public class ProductService {
 
             ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("create", LocalDateTime.now(), responses.size(), responses);
             InventoryRequestList inventoryRequestList = InventoryRequestList.builder()
-                    .orderList(products.stream()
+                    .itemList(products.stream()
                             .map(product -> InventoryRequest.builder()
                                     .sku(product.getSku())
                                     .stock(0).build())
