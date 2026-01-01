@@ -1,6 +1,7 @@
 package com.candlekart.inventory_service.service;
 
 import com.candlekart.inventory_service.dto.InventoryRequest;
+import com.candlekart.inventory_service.dto.InventoryRequestList;
 import com.candlekart.inventory_service.dto.InventoryResponse;
 import com.candlekart.inventory_service.dto.OrderResponse;
 import com.candlekart.inventory_service.exc.InsufficientStockException;
@@ -74,8 +75,8 @@ public class InventoryService {
     }
 
     @Transactional
-    public void reserveStock(List<InventoryRequest> requests){
-        for (InventoryRequest entry : requests) {
+    public void reserveStock(InventoryRequestList requests){
+        for (InventoryRequest entry : requests.getOrderList()) {
             InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 
@@ -88,8 +89,8 @@ public class InventoryService {
     }
 
     @Transactional
-    public void releaseStock(List<InventoryRequest> requests){
-        for (InventoryRequest entry : requests) {
+    public void releaseStock(InventoryRequestList requests){
+        for (InventoryRequest entry : requests.getOrderList()) {
             InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 

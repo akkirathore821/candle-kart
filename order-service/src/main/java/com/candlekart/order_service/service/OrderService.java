@@ -1,6 +1,7 @@
 package com.candlekart.order_service.service;
 
 import com.candlekart.order_service.dto.CartResponse;
+import com.candlekart.order_service.dto.InventoryRequest;
 import com.candlekart.order_service.dto.OrderItemResponse;
 import com.candlekart.order_service.dto.OrderResponse;
 import com.candlekart.order_service.kafka.KafkaProducer;
@@ -18,8 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.candlekart.order_service.constants.Constants.Create_Order_To_Inventory_Topic_Name;
-import static com.candlekart.order_service.constants.Constants.Payment_Order_To_Payment_Topic_Name;
+import static com.candlekart.order_service.constants.Constants.*;
 
 @Slf4j
 @Service
@@ -36,6 +36,13 @@ public class OrderService {
             Order order = cartToOrderEntity(cart);
             OrderResponse orderDto = toDto(orderRepository.save(order));
             kafkaProducer.publish(Payment_Order_To_Payment_Topic_Name, orderDto);
+            List<InventoryRequest> inventoryList = orderDto.getItems().stream()
+                    .map(orderItemResponse -> InventoryRequest.builder()
+                            .sku(orderItemResponse.getSku())
+                            .stock(orderItemResponse.getQuantity())
+                            .build())
+                    .collect(Collectors.toList());
+            kafkaProducer.publish(Reserve_Order_To_Inventory_Topic_Name, inventoryList);
             return orderDto;
         }catch (RuntimeException ex){
             throw new RuntimeException(ex.getMessage());

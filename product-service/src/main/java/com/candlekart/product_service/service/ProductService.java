@@ -152,6 +152,7 @@ public class ProductService {
         productRepository.findById(productId)
                 .orElseThrow(() -> new NotFoundException("Product not found"));
         productRepository.deleteById(productId);
+        //todo delete the products from the elasticsearch and inventory
     }
 
 
