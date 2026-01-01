@@ -34,8 +34,8 @@ public class InventoryService {
         return toDto(inventoryRepository.save(toEntity(request)));
     }
 
-    public List<InventoryResponse> addAllInventory(List<InventoryRequest> requests) {
-        List<InventoryProduct> inventories = requests
+    public List<InventoryResponse> addAllInventory(InventoryRequestList requests) {
+        List<InventoryProduct> inventories = requests.getItemList()
                 .stream()
                 .map(this::toEntity)
                 .toList();
@@ -76,7 +76,7 @@ public class InventoryService {
 
     @Transactional
     public void reserveStock(InventoryRequestList requests){
-        for (InventoryRequest entry : requests.getOrderList()) {
+        for (InventoryRequest entry : requests.getItemList()) {
             InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 
@@ -90,7 +90,7 @@ public class InventoryService {
 
     @Transactional
     public void releaseStock(InventoryRequestList requests){
-        for (InventoryRequest entry : requests.getOrderList()) {
+        for (InventoryRequest entry : requests.getItemList()) {
             InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 

@@ -52,13 +52,18 @@ public class ProductService {
             List<ProductResponse> responses = products.stream().map(this::toDto).toList();
 
             ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("create", LocalDateTime.now(), responses.size(), responses);
-            InventoryMessageDTO inventoryMessageDTO = new InventoryMessageDTO("create", LocalDateTime.now(), products.size(),
-                    products.stream()
-                            .map(product -> new InventoryDTO(product.getSku(), 0))
-                            .toList());
+            InventoryRequestList inventoryRequestList = InventoryRequestList.builder()
+                    .orderList(products.stream()
+                            .map(product -> InventoryRequest.builder()
+                                    .sku(product.getSku())
+                                    .stock(0).build())
+                            .toList())
+                    .build();
+
+
 
             //Publishing the message to the Inventory and Elasticsearch
-            publish(Create_Product_In_Inventory_Topic_Name, inventoryMessageDTO);
+            publish(Create_Product_In_Inventory_Topic_Name, inventoryRequestList);
             publish(Create_Product_In_ElasticSearch_Topic_Name, elasticSearchMessageDTO);
 
             return responses;

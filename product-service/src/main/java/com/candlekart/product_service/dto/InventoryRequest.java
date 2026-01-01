@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class InventoryDTO {
+public class InventoryRequest {
     private String sku;
-    private Integer quantity;
+    private Integer stock;
 
     public String getSku() {
         return sku;
@@ -22,11 +22,11 @@ public class InventoryDTO {
         this.sku = sku;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStock() {
+        return stock;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

@@ -19,25 +19,20 @@ public class KafkaConsumer {
     @Autowired
     private InventoryService inventoryService;
 
-    @KafkaListener(topics = Create_Order_To_Inventory_Topic_Name)
-    public void onOrderCreated(OrderResponse order){
-        if(order == null) throw new InvalidOrderException("Kafka Order is null or invalid data");
-        inventoryService.onOrderCreation(order);
-
+    @KafkaListener(topics = Create_Product_In_Inventory_Topic_Name)
+    public void onProductCreation(InventoryRequestList inventoryList){
+        if(inventoryList == null) throw new InvalidOrderException("Kafka Order is null or invalid data");
+        inventoryService.addAllInventory(inventoryList);
     }
-
     @KafkaListener(topics = Reserve_Order_To_Inventory_Topic_Name)
     public void onStockReserve(InventoryRequestList ordersList){
         if(ordersList == null) throw new InvalidOrderException("Kafka Order is null or invalid data");
         inventoryService.reserveStock(ordersList);
-
     }
-
     @KafkaListener(topics = Release_Stock_To_Inventory_Topic_Name)
     public void onStockRelease(InventoryRequestList ordersList){
         if(ordersList == null) throw new InvalidOrderException("Kafka Order is null or invalid data");
         inventoryService.releaseStock(ordersList);
-
     }
 
 }
