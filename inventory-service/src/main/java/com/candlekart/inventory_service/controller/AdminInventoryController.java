@@ -1,6 +1,7 @@
 package com.candlekart.inventory_service.controller;
 
 import com.candlekart.inventory_service.dto.InventoryRequest;
+import com.candlekart.inventory_service.dto.InventoryRequestList;
 import com.candlekart.inventory_service.dto.InventoryResponse;
 import com.candlekart.inventory_service.service.InventoryService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class AdminInventoryController {
     }
 
     @PostMapping("/addAll")
-    public ResponseEntity<List<InventoryResponse>> addAllInventory(@RequestBody List<InventoryRequest> requests) {
+    public ResponseEntity<List<InventoryResponse>> addAllInventory(@RequestBody InventoryRequestList requests) {
         return ResponseEntity.ok(inventoryService.addAllInventory(requests));
     }
 
