@@ -45,7 +45,7 @@ public class InventoryService {
     }
 
     public InventoryResponse getInventoryBySku(String skuCode) {
-        InventoryProduct inventory = inventoryRepository.findBySkuCode(skuCode)
+        InventoryProduct inventory = inventoryRepository.findBySku(skuCode)
                 .orElseThrow(() -> new NotFoundException("Product not found: " + skuCode));
         return toDto(inventory);
     }
@@ -53,7 +53,7 @@ public class InventoryService {
     @Transactional
     public void reduceStock(List<InventoryRequest> requests) {
         for (InventoryRequest entry : requests) {
-            InventoryProduct currentInventory = inventoryRepository.findBySkuCode(entry.getSku())
+            InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 
             if (currentInventory.getStock() < entry.getStock()) {
@@ -66,7 +66,7 @@ public class InventoryService {
     @Transactional
     public void restoreStock(List<InventoryRequest> requests) {
         for (InventoryRequest entry : requests) {
-            InventoryProduct currentInventory = inventoryRepository.findBySkuCode(entry.getSku())
+            InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 
             currentInventory.setStock(currentInventory.getStock() + entry.getStock());
@@ -76,7 +76,7 @@ public class InventoryService {
     @Transactional
     public void reserveStock(List<InventoryRequest> requests){
         for (InventoryRequest entry : requests) {
-            InventoryProduct currentInventory = inventoryRepository.findBySkuCode(entry.getSku())
+            InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 
             if (currentInventory.getStock() < entry.getStock()) {
@@ -90,7 +90,7 @@ public class InventoryService {
     @Transactional
     public void releaseStock(List<InventoryRequest> requests){
         for (InventoryRequest entry : requests) {
-            InventoryProduct currentInventory = inventoryRepository.findBySkuCode(entry.getSku())
+            InventoryProduct currentInventory = inventoryRepository.findBySku(entry.getSku())
                     .orElseThrow(() -> new NotFoundException("SKU not found: " + entry.getSku()));
 
             if (currentInventory.getReserved() < entry.getStock()) {
@@ -102,7 +102,7 @@ public class InventoryService {
     }
 
     public List<InventoryResponse> checkStock(List<String> skuCodes) {
-        return inventoryRepository.findBySkuCodeIn(skuCodes)
+        return inventoryRepository.findBySkuIn(skuCodes)
                 .stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
