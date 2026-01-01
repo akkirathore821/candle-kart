@@ -76,7 +76,7 @@ public class JwtService {
     }
     public boolean validateToken(String token) {
         try {
-            return extractAllClaims(token).getExpiration().before(new Date());
+            return extractAllClaims(token).getExpiration().after(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             return false;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
