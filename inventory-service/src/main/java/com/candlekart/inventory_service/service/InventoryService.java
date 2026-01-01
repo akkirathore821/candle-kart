@@ -3,7 +3,6 @@ package com.candlekart.inventory_service.service;
 import com.candlekart.inventory_service.dto.InventoryRequest;
 import com.candlekart.inventory_service.dto.InventoryRequestList;
 import com.candlekart.inventory_service.dto.InventoryResponse;
-import com.candlekart.inventory_service.dto.OrderResponse;
 import com.candlekart.inventory_service.exc.InsufficientStockException;
 import com.candlekart.inventory_service.exc.NotFoundException;
 import com.candlekart.inventory_service.model.InventoryProduct;
@@ -23,12 +22,6 @@ public class InventoryService {
 
     @Autowired
     private InventoryRepository inventoryRepository;
-
-    public void onOrderCreation(OrderResponse order){
-        //todo
-
-
-    }
 
     public InventoryResponse addNewProduct(InventoryRequest request) {
         return toDto(inventoryRepository.save(toEntity(request)));
