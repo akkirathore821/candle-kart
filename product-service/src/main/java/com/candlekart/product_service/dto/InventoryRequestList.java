@@ -12,13 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class InventoryRequestList {
-    private List<InventoryRequest> orderList;
+    private List<InventoryRequest> itemList;
 
-    public List<InventoryRequest> getOrderList() {
-        return orderList;
+    public List<InventoryRequest> getItemList() {
+        return itemList;
     }
 
-    public void setOrderList(List<InventoryRequest> orderList) {
-        this.orderList = orderList;
+    public void setItemList(List<InventoryRequest> itemList) {
+        this.itemList = itemList;
     }
 }
