@@ -14,7 +14,7 @@ spring:
       properties:
         spring.json.trusted.packages: "*"
         spring.json.use.type.headers: false
-        spring.json.value.default.type: com.candlekart.inventory.dto.InventoryRequestList
+        spring.json.value.default.type: com.candlekart.inventory_service.dto.InventoryRequestList
 
   datasource:
     url: jdbc:postgresql://localhost:5432/candlekart
