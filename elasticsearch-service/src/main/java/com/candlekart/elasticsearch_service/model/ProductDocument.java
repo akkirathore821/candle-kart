@@ -17,7 +17,7 @@ public class ProductDocument {
     @Id
     private String id;
 
-    private Long productId;
+    private UUID productId;
     private String sku;
     private String name;
     private String description;
@@ -31,11 +31,19 @@ public class ProductDocument {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Long getProductId() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public UUID getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(UUID productId) {
         this.productId = productId;
     }
 
