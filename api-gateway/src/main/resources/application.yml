@@ -32,6 +32,11 @@ spring:
           predicates:
             - Path=/api/product/** , /api/admin/product/**
 
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/inventory/** , /api/admin/inventory/**
+
       server:
         webflux:
           discovery:
