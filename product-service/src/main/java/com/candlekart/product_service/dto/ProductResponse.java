@@ -17,6 +17,9 @@ public class ProductResponse {
     private String currency;
     private String imageUrl;
 
+//    todo
+//    private Boolean inStock;
+
     public UUID getProductId() {
         return productId;
     }

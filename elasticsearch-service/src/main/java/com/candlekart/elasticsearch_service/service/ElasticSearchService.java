@@ -5,12 +5,10 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.candlekart.elasticsearch_service.dto.ElasticSearchProductList;
-import com.candlekart.elasticsearch_service.dto.ProductRRequest;
 import com.candlekart.elasticsearch_service.dto.ProductRequest;
 import com.candlekart.elasticsearch_service.exc.BadRequestException;
 import com.candlekart.elasticsearch_service.model.ProductDocument;
 import com.candlekart.elasticsearch_service.repo.ProductSearchRepository;
-import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -113,11 +111,11 @@ public class ElasticSearchService {
 //        return repository.save(doc);
 //    }
 
-    public @Nullable List<ProductDocument> addAllProducts(ElasticSearchProductList requests) {
-        List<ProductDocument> docs = requests.stream()
+    public void addAllProducts(ElasticSearchProductList requests) {
+        List<ProductDocument> docs = requests.getProductsList().stream()
                 .map(this::toDoc)
                 .toList();
-        return (List<ProductDocument>) repository.saveAll(docs);
+        repository.saveAll(docs);
     }
 
     public void updateAllProducts(ProductRequest request) {
@@ -158,7 +156,7 @@ public class ElasticSearchService {
         repository.save(product);
     }
 
-    private ProductDocument toDoc (ProductRRequest request){
+    private ProductDocument toDoc (ProductRequest request){
         return ProductDocument.builder()
                 .productId(request.getProductId())
                 .sku(request.getSku())
@@ -168,7 +166,8 @@ public class ElasticSearchService {
                 .price(request.getPrice())
                 .currency(request.getCurrency())
                 .imageUrl(request.getImageUrl())
-                .inStock(request.getInStock())
+//                todo work the in inStock field, it should be set according the ProductRequest
+                .inStock(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
