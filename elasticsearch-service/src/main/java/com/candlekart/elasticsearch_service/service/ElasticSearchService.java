@@ -4,8 +4,10 @@ import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.json.JsonData;
+import com.candlekart.elasticsearch_service.dto.ElasticSearchProductList;
+import com.candlekart.elasticsearch_service.dto.ProductRRequest;
 import com.candlekart.elasticsearch_service.dto.ProductRequest;
+import com.candlekart.elasticsearch_service.exc.BadRequestException;
 import com.candlekart.elasticsearch_service.model.ProductDocument;
 import com.candlekart.elasticsearch_service.repo.ProductSearchRepository;
 import org.jspecify.annotations.Nullable;
@@ -20,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SearchService {
+public class ElasticSearchService {
 
     @Autowired
     private ElasticsearchClient elasticsearchClient;
@@ -106,19 +108,57 @@ public class SearchService {
         }
     }
 
-    public ProductDocument addProduct(ProductRequest request) {
-        ProductDocument doc = toDoc(request);
-        return repository.save(doc);
-    }
+//    public ProductDocument addProduct(ProductRRequest request) {
+//        ProductDocument doc = toDoc(request);
+//        return repository.save(doc);
+//    }
 
-    public @Nullable List<ProductDocument> addAllProducts(List<ProductRequest> requests) {
+    public @Nullable List<ProductDocument> addAllProducts(ElasticSearchProductList requests) {
         List<ProductDocument> docs = requests.stream()
                 .map(this::toDoc)
                 .toList();
         return (List<ProductDocument>) repository.saveAll(docs);
     }
 
-    private ProductDocument toDoc (ProductRequest request){
+    public void updateAllProducts(ProductRequest request) {
+        ProductDocument product = repository.findBySku(request.getSku())
+                .orElseThrow(() -> new RuntimeException("Product not found on Elastic search"));
+
+        boolean updated = false;
+
+        if (request.getName() != null && !request.getName().isBlank()) {
+            product.setName(request.getName());
+            updated = true;
+        }
+        if (request.getDescription() != null && !request.getDescription().isBlank()) {
+            product.setDescription(request.getDescription());
+            updated = true;
+        }
+        if (request.getCategory() != null) {
+            product.setCategory(request.getCategory());
+            updated = true;
+        }
+        if (request.getPrice() != null && request.getPrice() >= 0) {
+            product.setPrice(request.getPrice());
+            updated = true;
+        }
+        if (request.getCurrency() != null && !request.getCurrency().isBlank()) {
+            product.setCurrency(request.getCurrency());
+            updated = true;
+        }
+        if (request.getImageUrl() != null && !request.getImageUrl().isBlank()) {
+            product.setImageUrl(request.getImageUrl());
+            updated = true;
+        }
+        if (!updated) {
+            throw new BadRequestException("No fields provided for update");
+        }
+        product.setUpdatedAt(LocalDateTime.now());
+
+        repository.save(product);
+    }
+
+    private ProductDocument toDoc (ProductRRequest request){
         return ProductDocument.builder()
                 .productId(request.getProductId())
                 .sku(request.getSku())
@@ -133,4 +173,6 @@ public class SearchService {
                 .updatedAt(LocalDateTime.now())
                 .build();
     }
+
+
 }

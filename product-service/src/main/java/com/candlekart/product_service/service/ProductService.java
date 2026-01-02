@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.candlekart.product_service.constants.Constants.*;
 
@@ -51,9 +50,11 @@ public class ProductService {
 
             List<ProductResponse> responses = products.stream().map(this::toDto).toList();
 
-            ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("create", LocalDateTime.now(), responses.size(), responses);
+            ElasticSearchProductList elasticSearchProductList = ElasticSearchProductList.builder()
+                    .productsList(responses).build();
+
             InventoryRequestList inventoryRequestList = InventoryRequestList.builder()
-                    .itemList(products.stream()
+                    .itemList(responses.stream()
                             .map(product -> InventoryRequest.builder()
                                     .sku(product.getSku())
                                     .stock(0).build())
@@ -65,8 +66,8 @@ public class ProductService {
             //Publishing the message to the Inventory and Elasticsearch
             if(inventoryRequestList != null && !inventoryRequestList.getItemList().isEmpty())
                 publish(Create_Product_In_Inventory_Topic_Name, inventoryRequestList);
-            if(!elasticSearchMessageDTO.getProducts().isEmpty())
-                publish(Create_Product_In_ElasticSearch_Topic_Name, elasticSearchMessageDTO);
+            if(!elasticSearchProductList.getProductsList().isEmpty())
+                publish(Create_Product_In_ElasticSearch_Topic_Name, elasticSearchProductList);
 
             return responses;
 
@@ -111,8 +112,6 @@ public class ProductService {
     @Transactional
     public ProductResponse updateProduct(ProductRequest request) {
 
-        //Todo Need to call Elasticsearch service to update product
-
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(() -> new NotFoundException("Product not found"));
 
@@ -149,8 +148,10 @@ public class ProductService {
 
         List<ProductResponse> products = new ArrayList<>();
         products.add(toDto(product));
-        ElasticSearchMessageDTO elasticSearchMessageDTO = new ElasticSearchMessageDTO("update", LocalDateTime.now(), products.size(), products);
-        publish(Update_Product_In_ElasticSearch_Topic_Name, elasticSearchMessageDTO);
+        ElasticSearchProductList elasticSearchProductList = ElasticSearchProductList.builder()
+                .productsList(products).build();
+
+        publish(Update_Product_In_ElasticSearch_Topic_Name, elasticSearchProductList);
 
 
         return toDto(product);

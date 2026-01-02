@@ -5,14 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductRequest {
-    private UUID productId;
+public class ProductRRequest {
+
+    private Long productId;
     private String sku;
     private String name;
     private String description;
@@ -20,12 +19,13 @@ public class ProductRequest {
     private Double price;
     private String currency;
     private String imageUrl;
+    private Boolean inStock;
 
-    public UUID getProductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setProductId(UUID productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -83,5 +83,13 @@ public class ProductRequest {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Boolean getInStock() {
+        return inStock;
+    }
+
+    public void setInStock(Boolean inStock) {
+        this.inStock = inStock;
     }
 }

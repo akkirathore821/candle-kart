@@ -27,7 +27,6 @@ public class KafkaConsumer {
         }
         inventoryService.addAllInventory(inventoryList);
     }
-
     @KafkaListener(topics = Reserve_Order_To_Inventory_Topic_Name)
     public void onStockReserve(InventoryRequestList ordersList){
         if(ordersList == null) throw new InvalidOrderException("Kafka Order is null or invalid data");

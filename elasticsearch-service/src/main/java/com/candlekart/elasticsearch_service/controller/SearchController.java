@@ -2,7 +2,7 @@ package com.candlekart.elasticsearch_service.controller;
 
 import com.candlekart.elasticsearch_service.model.ProductDocument;
 
-import com.candlekart.elasticsearch_service.service.SearchService;
+import com.candlekart.elasticsearch_service.service.ElasticSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
 
     @Autowired
-    private SearchService searchService;
+    private ElasticSearchService elasticSearchService;
 
     @GetMapping("/products")
     public ResponseEntity<Page<ProductDocument>> search(
@@ -30,7 +30,7 @@ public class SearchController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false,defaultValue = "price_asc") String sort
     ) {
-        return ResponseEntity.ok(searchService.search(q, category, minPrice, maxPrice, null, page, size, sort));
+        return ResponseEntity.ok(elasticSearchService.search(q, category, minPrice, maxPrice, null, page, size, sort));
     }
 
 //    @GetMapping("/suggest")
