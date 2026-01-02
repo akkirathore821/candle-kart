@@ -63,8 +63,10 @@ public class ProductService {
 
 
             //Publishing the message to the Inventory and Elasticsearch
-            publish(Create_Product_In_Inventory_Topic_Name, inventoryRequestList);
-            publish(Create_Product_In_ElasticSearch_Topic_Name, elasticSearchMessageDTO);
+            if(inventoryRequestList != null && !inventoryRequestList.getItemList().isEmpty())
+                publish(Create_Product_In_Inventory_Topic_Name, inventoryRequestList);
+            if(!elasticSearchMessageDTO.getProducts().isEmpty())
+                publish(Create_Product_In_ElasticSearch_Topic_Name, elasticSearchMessageDTO);
 
             return responses;
 
