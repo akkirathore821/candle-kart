@@ -40,7 +40,7 @@ spring:
         - id: elasticsearch-service
           uri: lb://elasticsearch-service
           predicates:
-            - Path=/api/search/** , /api/elastic_product/**
+            - Path=/api/search/**
 
       server:
         webflux:
