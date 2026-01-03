@@ -114,11 +114,14 @@ public class ElasticSearchService {
 //    }
 
     public void addAllProducts(ElasticSearchProductList requests) {
+        log.info("ElasticSearch Service : addAllProducts : Init");
         List<ProductDocument> docs = requests.getProductsList().stream()
                 .map(this::toDoc)
                 .toList();
 
         log.info("ElasticSearch Service : " + docs.toString());
+
+        log.info("ElasticSearch Service : addAllProducts : Init");
 
         repository.saveAll(docs);
     }

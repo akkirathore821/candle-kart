@@ -19,8 +19,10 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = Create_Product_In_ElasticSearch_Topic_Name, groupId = "elasticsearch-service")
     public void onProductCreate(ElasticSearchProductList productList) {
+        log.info("ElasticSearch Service : onProductCreate : Init");
         if (productList == null || productList.getProductsList() == null)
             throw new BadRequestException("Kafka message is null or invalid");
+        log.info("ElasticSearch Service : onProductCreate : End");
         service.addAllProducts(productList);
     }
     @KafkaListener(topics = Update_Product_In_ElasticSearch_Topic_Name, groupId = "elasticsearch-service")
