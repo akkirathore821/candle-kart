@@ -5,7 +5,7 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import com.candlekart.elasticsearch_service.dto.ElasticSearchProductList;
-import com.candlekart.elasticsearch_service.dto.ProductRequest;
+import com.candlekart.elasticsearch_service.dto.ProductDto;
 import com.candlekart.elasticsearch_service.exc.BadRequestException;
 import com.candlekart.elasticsearch_service.model.ProductDocument;
 import com.candlekart.elasticsearch_service.repo.ProductSearchRepository;
@@ -116,7 +116,7 @@ public class ElasticSearchService {
     public void addAllProducts(ElasticSearchProductList requests) {
         log.info("ElasticSearch Service : addAllProducts : Init");
         List<ProductDocument> docs = requests.getProductsList().stream()
-                .map(this::toDoc)
+                .map(this::toDocument)
                 .toList();
 
         log.info("ElasticSearch Service : " + docs.toString());
@@ -126,7 +126,7 @@ public class ElasticSearchService {
         repository.saveAll(docs);
     }
 
-    public void updateAllProducts(ProductRequest request) {
+    public void updateAllProducts(ProductDto request) {
         ProductDocument product = repository.findBySku(request.getSku())
                 .orElseThrow(() -> new RuntimeException("Product not found on Elastic search"));
 
@@ -164,7 +164,7 @@ public class ElasticSearchService {
         repository.save(product);
     }
 
-    private ProductDocument toDoc (ProductRequest request){
+    private ProductDocument toDocument(ProductDto request){
         return ProductDocument.builder()
                 .productId(request.getProductId())
                 .sku(request.getSku())
@@ -178,6 +178,21 @@ public class ElasticSearchService {
                 .inStock(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
+                .build();
+    }
+
+    private ProductDto toDto (ProductDocument request){
+        return ProductDto.builder()
+                .productId(request.getProductId())
+                .sku(request.getSku())
+                .name(request.getName())
+                .description(request.getDescription())
+                .category(request.getCategory())
+                .price(request.getPrice())
+                .currency(request.getCurrency())
+                .imageUrl(request.getImageUrl())
+//                todo work the in inStock field, it should be set according the ProductRequest
+//                .inStock(true)
                 .build();
     }
 

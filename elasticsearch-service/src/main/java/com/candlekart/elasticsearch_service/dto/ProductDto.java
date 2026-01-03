@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductRequest {
+public class ProductDto {
     private UUID productId;
     private String sku;
     private String name;

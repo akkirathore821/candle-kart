@@ -12,13 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class ElasticSearchProductList {
-    private List<ProductRequest> productsList;
+    private List<ProductDto> productsList;
 
-    public List<ProductRequest> getProductsList() {
+    public List<ProductDto> getProductsList() {
         return productsList;
     }
 
-    public void setProductsList(List<ProductRequest> productsList) {
+    public void setProductsList(List<ProductDto> productsList) {
         this.productsList = productsList;
     }
 }

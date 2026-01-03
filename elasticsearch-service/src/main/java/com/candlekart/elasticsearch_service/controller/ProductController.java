@@ -1,14 +1,8 @@
 package com.candlekart.elasticsearch_service.controller;
 
-import com.candlekart.elasticsearch_service.dto.ProductRRequest;
-import com.candlekart.elasticsearch_service.model.ProductDocument;
-
 import com.candlekart.elasticsearch_service.service.ElasticSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/elastic_product")

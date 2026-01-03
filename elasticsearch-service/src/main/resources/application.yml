@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: elasticsearch-service
+
+#  elasticsearch:
+#    uris: http://localhost:9200
+#    username: elastic
+#    password: elastic
