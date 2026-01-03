@@ -19,8 +19,7 @@ public class KafkaConsumer {
     @Autowired
     private InventoryService inventoryService;
 
-    @KafkaListener(topics = Create_Product_In_Inventory_Topic_Name, groupId = "inventory-service"
-    )
+    @KafkaListener(topics = Create_Product_In_Inventory_Topic_Name, groupId = "inventory-service")
     public void onProductCreation(InventoryRequestList inventoryList) {
         if (inventoryList == null || inventoryList.getItemList() == null) {
             throw new InvalidOrderException("Kafka message is null or invalid");
