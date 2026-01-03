@@ -9,6 +9,7 @@ import com.candlekart.elasticsearch_service.dto.ProductRequest;
 import com.candlekart.elasticsearch_service.exc.BadRequestException;
 import com.candlekart.elasticsearch_service.model.ProductDocument;
 import com.candlekart.elasticsearch_service.repo.ProductSearchRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ElasticSearchService {
 
@@ -115,6 +117,9 @@ public class ElasticSearchService {
         List<ProductDocument> docs = requests.getProductsList().stream()
                 .map(this::toDoc)
                 .toList();
+
+        log.info("ElasticSearch Service : " + docs.toString());
+
         repository.saveAll(docs);
     }
 
