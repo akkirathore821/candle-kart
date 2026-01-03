@@ -37,6 +37,11 @@ spring:
           predicates:
             - Path=/api/inventory/** , /api/admin/inventory/**
 
+        - id: elasticsearch-service
+          uri: lb://elasticsearch-service
+          predicates:
+            - Path=/api/search/** , /api/elastic_product/**
+
       server:
         webflux:
           discovery:

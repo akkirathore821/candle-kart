@@ -61,8 +61,6 @@ public class ProductService {
                             .toList())
                     .build();
 
-
-
             //Publishing the message to the Inventory and Elasticsearch
             if(inventoryRequestList != null && !inventoryRequestList.getItemList().isEmpty())
                 publish(Create_Product_In_Inventory_Topic_Name, inventoryRequestList);
@@ -74,9 +72,6 @@ public class ProductService {
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
-
-
-
 
 //        ToDo
 //        If SKU exists → it skips silently
