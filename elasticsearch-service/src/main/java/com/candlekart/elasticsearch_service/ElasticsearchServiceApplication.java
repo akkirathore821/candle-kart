@@ -2,20 +2,11 @@ package com.candlekart.elasticsearch_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration;
-import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
-import org.springframework.kafka.annotation.EnableKafka;
 
-@SpringBootApplication(
-        exclude = {
-                DataSourceAutoConfiguration.class
-        }
-)
-@EnableKafka
+@SpringBootApplication
 @EnableElasticsearchRepositories(basePackages = "com.candlekart.elasticsearch_service.repo")
 public class ElasticsearchServiceApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(ElasticsearchServiceApplication.class, args);
     }
