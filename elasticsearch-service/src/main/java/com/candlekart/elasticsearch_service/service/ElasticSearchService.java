@@ -123,7 +123,7 @@ public class ElasticSearchService {
 
         log.info("ElasticSearch Service : addAllProducts : End");
 
-        repository.saveAll(docs);
+//        repository.saveAll(docs);
     }
 
     public void updateAllProducts(ProductRequest request) {
