@@ -121,7 +121,7 @@ public class ElasticSearchService {
 
         log.info("ElasticSearch Service : " + docs.toString());
 
-        log.info("ElasticSearch Service : addAllProducts : Init");
+        log.info("ElasticSearch Service : addAllProducts : End");
 
         repository.saveAll(docs);
     }
