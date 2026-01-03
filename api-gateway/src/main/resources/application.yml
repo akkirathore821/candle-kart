@@ -37,7 +37,7 @@ spring:
           uri: lb://inventory-service
           predicates:
             - Path=/api/admin/inventory/**
-            
+
         - id: elasticsearch-service
           uri: lb://elasticsearch-service
           predicates:
