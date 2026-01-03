@@ -1,26 +1,20 @@
 package com.candlekart.user_service.controller;
 
 import com.candlekart.user_service.dto.UpdateUserRequest;
-import com.candlekart.user_service.dto.UserRequest;
 import com.candlekart.user_service.dto.UserResponse;
 import com.candlekart.user_service.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/user/user/")
+public class UserUserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/create")
-    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
-    }
     @GetMapping("/id/{userId}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable String userId){
         return ResponseEntity.ok(userService.getUserById(userId));

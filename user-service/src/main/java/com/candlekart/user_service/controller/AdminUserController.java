@@ -18,6 +18,10 @@ public class AdminUserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping("/create")
+    public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(request));
+    }
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable String userId){
         return ResponseEntity.ok(userService.deleteUser(userId));

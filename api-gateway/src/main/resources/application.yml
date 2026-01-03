@@ -12,35 +12,36 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/api/user/** , /api/admin/user/**
-
-        - id: connection
-          uri: lb://connection
-          predicates:
-            - Path=/api/connection/**
-
-        - id: auth-service
-          uri: lb://auth-service
-          predicates:
-            - Path=/api/auth/**
 
         - id: product-service
           uri: lb://product-service
           predicates:
-            - Path=/api/product/** , /api/admin/product/**
+            - Path=/api/admin/product/** , /api/public/product/**
+
+        - id: connection
+          uri: lb://connection
+          predicates:
+            - Path=/api/public/connection/**
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/admin/user/** , /api/user/user/**
+
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/public/auth/** , /api/user/auth/**
 
         - id: inventory-service
           uri: lb://inventory-service
           predicates:
-            - Path=/api/inventory/** , /api/admin/inventory/**
-
+            - Path=/api/admin/inventory/**
+            -
         - id: elasticsearch-service
           uri: lb://elasticsearch-service
           predicates:
-            - Path=/api/search/**
+            - Path=/api/public/search/** , api/admin/search/**
 
       server:
         webflux:

@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/search")
+@RequestMapping("/api/public/search")
 @RequiredArgsConstructor
-public class SearchController {
+public class PublicSearchController {
 
     @Autowired
     private ElasticSearchService elasticSearchService;

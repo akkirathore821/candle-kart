@@ -26,6 +26,10 @@ public class AdminProductController {
     public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(request));
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
+    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable UUID id) {
         productService.deleteProduct(id);

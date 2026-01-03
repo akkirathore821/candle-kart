@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/connection")
+@RequestMapping("/api/public/connection")
 @Slf4j
-public class ConnectionController {
+public class PublicConnectionController {
     @GetMapping()
     public ResponseEntity<String> check(HttpServletRequest request) {
-        log.info("Check Method : Request : " + request.getRemoteAddr());
         return ResponseEntity.ok("This Connection Service : Connected : " + request.getRemoteAddr());
     }
 }

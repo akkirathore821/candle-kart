@@ -1,11 +1,8 @@
 package com.candlekart.product_service.controller;
 
-
-import com.candlekart.product_service.dto.ProductRequest;
 import com.candlekart.product_service.dto.ProductResponse;
 import com.candlekart.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,16 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/product")
-public class ProductController {
+@RequestMapping("/api/public/product")
+public class PublicProductController {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<ProductResponse>> getAllProducts() {
-        return ResponseEntity.ok(productService.getAllProducts());
-    }
     @GetMapping("/id/{productId}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable String productId) {
         return ResponseEntity.ok(productService.getProductById(productId));
@@ -31,7 +24,6 @@ public class ProductController {
     public ResponseEntity<ProductResponse> getProductBySKU(@PathVariable String sku) {
         return ResponseEntity.ok(productService.getProductBySKU(sku));
     }
-
 }
 
 
