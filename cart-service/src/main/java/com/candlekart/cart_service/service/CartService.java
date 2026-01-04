@@ -86,7 +86,8 @@ public class CartService {
             //Calling order create method to create method
             ResponseEntity<OrderResponse> orderResponse = feignOrderClient.createOrder(cartResponse);
             if(orderResponse.getStatusCode() == HttpStatus.CREATED || orderResponse.getStatusCode() == HttpStatus.OK){
-                clearCart(userId);
+                //commented for test purpose
+                //clearCart(userId);
                 return orderResponse.getBody();
             }else{
                 throw new RuntimeException("Unable to Create Order");

@@ -12,7 +12,7 @@ import java.util.UUID;
 public class OrderResponse {
 
     private UUID userId;
-    private BigDecimal totalAmount;
+    private Double totalAmount;
     private String status;
     private List<OrderItemResponse> items;
 
@@ -24,11 +24,11 @@ public class OrderResponse {
         this.userId = userId;
     }
 
-    public BigDecimal getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
