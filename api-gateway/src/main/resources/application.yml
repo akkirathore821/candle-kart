@@ -48,6 +48,11 @@ spring:
           predicates:
             - Path=/api/user/cart/**
 
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/admin/order/** , /api/user/order/**
+
       server:
         webflux:
           discovery:
