@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "order-service", path = "/api/order")
+@FeignClient(name = "order-service", path = "/api/admin/order")
 public interface FeignOrderClient {
 
     @PostMapping(value = "/create", consumes = "application/json")
