@@ -13,15 +13,15 @@ spring:
     gateway:
       routes:
 
-        - id: product-service
-          uri: lb://product-service
-          predicates:
-            - Path=/api/admin/product/** , /api/public/product/**
-
         - id: connection
           uri: lb://connection
           predicates:
             - Path=/api/public/connection/**
+
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/admin/product/** , /api/public/product/**
 
         - id: user-service
           uri: lb://user-service
@@ -42,6 +42,11 @@ spring:
           uri: lb://elasticsearch-service
           predicates:
             - Path=/api/public/search/** , api/admin/search/**
+
+        - id: cart-service
+          uri: lb://cart-service
+          predicates:
+            - Path=/api/user/cart/**
 
       server:
         webflux:

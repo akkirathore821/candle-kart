@@ -12,16 +12,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/order")
-public class OrderController {
+@RequestMapping("api/user/order")
+public class UserOrderController {
 
     @Autowired
     private OrderService orderService;
-
-    @PostMapping("/create")
-    public ResponseEntity<OrderResponse> createOrder(@RequestBody CartResponse cart){
-        return ResponseEntity.ok(orderService.createOrder(cart));
-    }
 
     @GetMapping("/getOrdersByUser/{userId}")
     public ResponseEntity<List<OrderResponse>> getOrdersByUser(@PathVariable String userId){
@@ -31,11 +26,5 @@ public class OrderController {
     @GetMapping("/getOrderById/{orderId}")
     public ResponseEntity<OrderResponse> getOrderById(@PathVariable String orderId){
         return ResponseEntity.ok(orderService.getOrderById(UUID.fromString(orderId)));
-    }
-
-    @DeleteMapping("/remove/{orderId}/{status}")
-    public ResponseEntity<?> updateOrderStatus(@PathVariable String orderId, @PathVariable String status){
-        orderService.updateOrderStatus(UUID.fromString(orderId), status);
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -33,6 +33,12 @@ public class OrderService {
     @Transactional
     public OrderResponse createOrder(CartResponse cart){
         try{
+
+            //Todo
+//            This flow is wrong
+//            1. Reserve stock using feign client
+//            2. save order
+//            3. pulblish to payment service
             Order order = cartToOrderEntity(cart);
             OrderResponse orderDto = toDto(orderRepository.save(order));
             kafkaProducer.publish(Payment_Order_To_Payment_Topic_Name, orderDto);

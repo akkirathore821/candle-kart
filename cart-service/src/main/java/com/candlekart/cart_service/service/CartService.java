@@ -86,7 +86,7 @@ public class CartService {
             //Calling order create method to create method
             ResponseEntity<OrderResponse> orderResponse = feignOrderClient.createOrder(cartResponse);
             if(orderResponse.getStatusCode() == HttpStatus.CREATED || orderResponse.getStatusCode() == HttpStatus.OK){
-//          todo commented just for testing      clearCart(userId);
+                clearCart(userId);
                 return orderResponse.getBody();
             }else{
                 throw new RuntimeException("Unable to Create Order");
@@ -97,7 +97,6 @@ public class CartService {
             throw new RuntimeException(e.getMessage());
         }
     }
-
 
     private CartResponse getCartFromRedis(String userId){
         Object obj = redisTemplate.opsForValue().get(CART_PREFIX + userId);
@@ -110,6 +109,7 @@ public class CartService {
                 .items(new ArrayList<>())
                 .build();
     }
+
     private void saveCartToRedis(String userId, CartResponse cart) {
         redisTemplate.opsForValue().set(CART_PREFIX + userId, cart);
     }

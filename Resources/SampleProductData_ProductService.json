@@ -99,5 +99,107 @@
   {"sku":"SKU-ELC-047","name":"Noise-Cancelling Headphones Pro","description":"Premium headphones with active noise cancellation.","category":"Electronics","price":12999.00,"currency":"INR","inStock":true,"imageUrl":"https://cdn.candlekart.com/images/products/noise-cancelling-headphones-pro.jpg"},
   {"sku":"SKU-ELC-048","name":"Smart Camera 360°","description":"Home security camera with 360° rotation and app control.","category":"Electronics","price":9999.00,"currency":"INR","inStock":true,"imageUrl":"https://cdn.candlekart.com/images/products/smart-camera-360.jpg"},
   {"sku":"SKU-ELC-049","name":"Gaming Headset GX","description":"Comfortable headset for immersive gaming experience.","category":"Electronics","price":4999.00,"currency":"INR","inStock":true,"imageUrl":"https://cdn.candlekart.com/images/products/gaming-headset-gx.jpg"},
-  {"sku":"SKU-ELC-050","name":"Smart Fitness Scale","description":"Track weight and body composition with this smart scale.","category":"Electronics","price":3999.00,"currency":"INR","inStock":true,"imageUrl":"https://cdn.candlekart.com/images/products/smart-fitness-scale.jpg"}
+  {"sku":"SKU-ELC-050","name":"Smart Fitness Scale","description":"Track weight and body composition with this smart scale.","category":"Electronics","price":3999.00,"currency":"INR","inStock":true,"imageUrl":"https://cdn.candlekart.com/images/products/smart-fitness-scale.jpg"},
+
+  {
+    "sku": "SKU-FURN-CT-001",
+    "name": "Solid Wood Coffee Table",
+    "description": "Handcrafted coffee table made from solid teak wood with a smooth matte finish.",
+    "category": "Furniture",
+    "price": 12499.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/coffee-table.jpg"
+  },
+  {
+    "sku": "SKU-FURN-SOFA-002",
+    "name": "Comfort Plus Fabric Sofa",
+    "description": "Soft fabric 3-seater sofa with deep cushions and sturdy wooden legs.",
+    "category": "Furniture",
+    "price": 37999.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/fabric-sofa.jpg"
+  },
+  {
+    "sku": "SKU-FURN-BED-003",
+    "name": "Queen Size Storage Bed",
+    "description": "Modern queen-size bed with hydraulic storage and engineered wood finish.",
+    "category": "Furniture",
+    "price": 33999.00,
+    "currency": "INR",
+    "inStock": false,
+    "imageUrl": "https://cdn.candlekart.com/images/products/queen-bed.jpg"
+  },
+  {
+    "sku": "SKU-FURN-CHAIR-004",
+    "name": "High Back Office Chair",
+    "description": "Ergonomic high-back chair with adjustable armrests and head support.",
+    "category": "Furniture",
+    "price": 9999.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/high-back-chair.jpg"
+  },
+  {
+    "sku": "SKU-FURN-DINE-005",
+    "name": "6-Seater Wooden Dining Set",
+    "description": "Elegant dining set with solid wood table and cushioned chairs.",
+    "category": "Furniture",
+    "price": 45999.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/dining-set.jpg"
+  },
+  {
+    "sku": "SKU-FURN-WARD-006",
+    "name": "Sliding Door Wardrobe",
+    "description": "3-door wardrobe with mirror, shelves, and hanging space.",
+    "category": "Furniture",
+    "price": 38999.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/sliding-wardrobe.jpg"
+  },
+  {
+    "sku": "SKU-FURN-RECL-007",
+    "name": "Single Seater Recliner",
+    "description": "Luxurious recliner chair with push-back mechanism and plush cushioning.",
+    "category": "Furniture",
+    "price": 24999.00,
+    "currency": "INR",
+    "inStock": false,
+    "imageUrl": "https://cdn.candlekart.com/images/products/recliner.jpg"
+  },
+  {
+    "sku": "SKU-FURN-SHELF-008",
+    "name": "5-Tier Wooden Bookshelf",
+    "description": "Open bookshelf with five spacious shelves for books and decor items.",
+    "category": "Furniture",
+    "price": 8999.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/bookshelf.jpg"
+  },
+  {
+    "sku": "SKU-FURN-TV-009",
+    "name": "Modern TV Entertainment Unit",
+    "description": "Wall-mounted TV unit with storage cabinets and cable management.",
+    "category": "Furniture",
+    "price": 19999.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/tv-unit.jpg"
+  },
+  {
+    "sku": "SKU-FURN-STUDY-010",
+    "name": "Compact Study Table",
+    "description": "Minimalist study table with drawer and engineered wood finish.",
+    "category": "Furniture",
+    "price": 7499.00,
+    "currency": "INR",
+    "inStock": true,
+    "imageUrl": "https://cdn.candlekart.com/images/products/study-table.jpg"
+  }
 ]
+
