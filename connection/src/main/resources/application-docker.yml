@@ -1,0 +1,14 @@
+server:
+  port: 8080   # internal container port
+
+spring:
+  application:
+    name: connection
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+  instance:
+    hostname: connection
+    prefer-ip-address: true
