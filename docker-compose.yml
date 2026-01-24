@@ -35,7 +35,7 @@ services:
   # ZOOKEEPER
   # ======================
   zookeeper:
-    image: bitnami/zookeeper:3.9
+    image: bitnami/zookeeper:3.9.2
     container_name: zookeeper
     restart: unless-stopped
     environment:
@@ -46,6 +46,7 @@ services:
   # ======================
   # KAFKA
   # ======================
+
   kafka:
     image: bitnami/kafka:3.7
     container_name: kafka
