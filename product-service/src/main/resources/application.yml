@@ -29,5 +29,7 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 eureka:
-  instance:
-    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+
