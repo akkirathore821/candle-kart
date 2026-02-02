@@ -33,5 +33,5 @@ eureka:
     service-url:
       defaultZone: http://eureka-server:8761/eureka
   instance:
-    hostname: auth-service
+    hostname: product-service
     prefer-ip-address: true
