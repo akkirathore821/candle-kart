@@ -35,21 +35,22 @@ services:
   # ZOOKEEPER
   # ======================
   zookeeper:
-    image: bitnami/zookeeper:3.9
+    image: bitnami/zookeeper:3.8.4-debian-11-r17
     container_name: zookeeper
     restart: unless-stopped
     environment:
       ALLOW_ANONYMOUS_LOGIN: "yes"
-    networks:
-      - backend-network
     ports:
       - "2181:2181"
+    networks:
+      - backend-network
+
 
   # ======================
   # KAFKA
   # ======================
   kafka:
-    image: bitnami/kafka:3.7
+    image: bitnami/kafka:3.7.0-debian-11-r0
     container_name: kafka
     restart: unless-stopped
     depends_on:
@@ -66,10 +67,9 @@ services:
       ALLOW_PLAINTEXT_LISTENER: "yes"
     ports:
       - "9093:9093"
-    volumes:
-      - kafkadata:/bitnami/kafka/data
     networks:
       - backend-network
+
 
   # ======================
   # ELASTICSEARCH
@@ -181,6 +181,7 @@ services:
     depends_on:
       - postgres
       - eureka-server
+      - kafka
     networks:
       - backend-network
 
