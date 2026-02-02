@@ -26,7 +26,7 @@ public class AdminProductController {
     public ResponseEntity<ProductResponse> updateProduct(@RequestBody ProductRequest request) {
         return ResponseEntity.ok(productService.updateProduct(request));
     }
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<ProductResponse>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }

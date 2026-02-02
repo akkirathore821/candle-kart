@@ -24,6 +24,10 @@ public class PublicProductController {
     public ResponseEntity<ProductResponse> getProductBySKU(@PathVariable String sku) {
         return ResponseEntity.ok(productService.getProductBySKU(sku));
     }
+    @GetMapping("/")
+    public ResponseEntity<List<ProductResponse>> getAllProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
+    }
 }
 
 

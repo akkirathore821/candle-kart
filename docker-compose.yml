@@ -165,6 +165,22 @@ services:
     networks:
       - backend-network
 
+  # ======================
+  # PRODUCT SERVICE
+  # ======================
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    ports:
+      - "8083:8080"   # host:container
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - postgres
+      - eureka-server
+    networks:
+      - backend-network
+
 
 # ======================
 # VOLUMES
